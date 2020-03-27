@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--
+    dibuat 18 Feb 2017, Jakarta Selatan
+    David Adi Nugroho
+    <davidadi216@gmail.com>
+   -->
+  <title>Jagung - Jadwal Sholat Masjid Agung</title>
+  <script>
+    //variable global
+    var dataGeo, daerahFull, latitude, longitude, now, startOfDay, timestampoftheday, dataSholat;
+    var tanggal, imsak, shubuh, terbit, dzuhur, ashr, maghrib, isya;
+    var urlGoogle = "http://maps.googleapis.com/maps/api/geocode/json";
+    var urlAladhan = "http://api.aladhan.com/timings/";
+
+  	function ayoSholat(){
+      //ambil data dari input daerah
+  		var daerah = $('#daerah').val();
+      //ajax ke Googlemaps API
+      $.ajax({
+    		url : urlGoogle+"?address="+daerah,
+    		type : "GET",
+    		success : function(data){
+          dataGeo = data;
+          daerahFull = dataGeo.results[0].formatted_address;
+          latitude = dataGeo.results[0].geometry.location.lat;
+          longitude = dataGeo.results[0].geometry.location.lng;
+
+          //ambil Timestamp
+          now = new Date();
+          startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          timestampoftheday = startOfDay / 1000;
+
+          console.log(timestampoftheday);
+          //ajax ke aladhan.com API
+          $.ajax({
+            url : urlAladhan+timestampoftheday+'?latitude='+latitude+'&longitude='+longitude+'&timezonestring=Asia/Jakarta',
+            type : "GET",
+          	success : function(data){
+              dataSholat = data;
+              tanggal = dataSholat.data.date.readable;
+              imsak = dataSholat.data.timings.Imsak;
+              shubuh = dataSholat.data.timings.Fajr;
+              terbit = dataSholat.data.timings.Sunrise;
+              dzuhur = dataSholat.data.timings.Dhuhr;
+              ashr = dataSholat.data.timings.Asr;
+              maghrib = dataSholat.data.timings.Maghrib;
+              isya = dataSholat.data.timings.Isha;
+
+              html = '\
+              <label for="namadaerah"><b>Daerah</b>:'+daerahFull+' <label><br/>\
+              <label for="latitude"><b>Latitude</b>: '+latitude+'</label><br/>\
+              <label for="longitude"><b>Longitude</b>: '+longitude+'</label><br/>\
+              <br/>\
+              <b>Jadwal Shalat</b><br/>\
+              <label for="tanggal">Tanggal: '+tanggal+'</label><br/>\
+              <ul>\
+                <li>Imsak: '+imsak+' WIB</li>\
+                <li>Shubuh: '+shubuh+' WIB</li>\
+                <li>Terbit: '+terbit+' WIB</li>\
+                <li>Dzuhur: '+dzuhur+' WIB</li>\
+                <li>Ashr: '+ashr+' WIB</li>\
+                <li>Magrib: '+maghrib+' WIB</li>\
+                <li>Isya: '+isya+' WIB</li>\
+              </ul>\
+              <label for="nb">*untuk WITA silahkan ditambah +1jam, WIT +2jam.</label><br/>\
+              <label for="nb">*data diambil dari <i><a target="_blank" href="'+urlGoogle+"?address="+daerah+'">GoogleMaps API</a></i> dan <i><a target="_blank" href="'+urlAladhan+timestampoftheday+'?latitude='+latitude+'&longitude='+longitude+'&timezonestring=Asia/Jakarta'+'">AlAdhan.com Prayer Times API</a></i></label>\
+              <br/>\
+              <label for="nb">*kode program: <i><a target="_blank" href="https://github.com/davidadinugroho/jagung-masjidagung">lihat disini</a></i></label>\
+              \
+              ';
+              $('#output').html(html);
+            },
+            error : function(data) {
+              alert('Ada kesalahan sistem, silahkan dicoba kembali...');
+            }
+          });
+    		},
+    		error : function(data) {
+          alert('Ada kesalahan sistem, silahkan dicoba kembali...');
+    		}
+    	});
+  	}
+  </script>
+ </head>
+ <body>
+    <h1 style="display:inline">Jagung</h1>
+    <h4 style="display:inline">&lt;Jadwal Sholat Masjid Agung&gt;</h4>
+    <hr />
+    <input id="daerah" type="lokasi" placeholder="kota/kabupaten"/>
+    <button type="submit" onclick="ayoSholat()">Ayo Sholat!</button>
+    <br/><br/>
+    <div id="output">
+    </div>
+ </body>
+ <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+</html>
