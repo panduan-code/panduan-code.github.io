@@ -79,7 +79,7 @@
             font-family: monospace;
             font-size:1.5em;
         }
-.auto_num {counter-reset: serial-number;} .auto_num td:first-child:before {counter-increment: serial-number;content: counter(serial-number); } .tablecovid{ background-color: #fff; box-shadow: 0 7px 16px 0 rgba(50,50,50,0.2); border-radius: 15px; text-align: center;} tr:nth-child(even){background-color: #f2f2f2;}
+.auto_num {counter-reset: serial-number;} .auto_num td:first-child:before {counter-increment: serial-number;content: counter(serial-number); } tr:nth-child(even){background-color: #f2f2f2;}
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         
@@ -156,9 +156,7 @@
         <div id="meninggal" class="angka"></div>
         <span class="detail">Meninggal</span>
         </div>
-        <div class="tablecovid">
-	    <br>
-    <table border="1" id="auto_num" align="center" style="border-collapse: collapse; width: 95%;">
+    <table border="1" id="auto_num" align="center" style="border-collapse: collapse; width: 95%; text-align: center;">
         <thead>
             <tr>
                 <th valign="center" height="30px" width="10%">
@@ -185,7 +183,6 @@
         </thead>
         <tbody class="auto_num" id="dataProv">
        </tbody></table>
-       <br />
-    </div> </div>
+    </div>
 </body>
 </html>
