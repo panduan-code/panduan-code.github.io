@@ -17,8 +17,12 @@
             width: 100%;
             float: left;
             text-align: center;
+        }.datax #show4{
+            width: 100%;
+            float: left;
+            text-align: center;
         }
-        .positif, .sembuh, .meninggal {
+        .positif, .sembuh, .meninggal, .dirawat {
             margin: 1%;
             border-radius: 5px;
             box-shadow: 0 1px 2px 2px rgba(0,0,0,.5);
@@ -37,6 +41,9 @@
         .datax .meninggal {
             background: #000000;
         }
+        .datax .dirawat {
+            background: #47fc00;
+        }
         #show1 .angka {
             font-size: 2em;
             font-weight: 700;
@@ -48,6 +55,11 @@
         text-shadow: 2px 2px 4px #000000;
         }
         #show3 .angka {
+            font-size: 2em;
+            font-weight: 700;
+        text-shadow: 2px 2px 4px #000000;
+        }
+        #show4 .angka {
             font-size: 2em;
             font-weight: 700;
         text-shadow: 2px 2px 4px #000000;
@@ -67,6 +79,13 @@
             box-shadow: 0px -2px 4px 1px #66c7ff;
         }
         #show3 .detail {
+            background: white;
+            width: 100%;
+            display: block;
+            color: black;
+            box-shadow: 0px -2px 4px 1px #66c7ff;
+        }
+        #show4 .detail {
             background: white;
             width: 100%;
             display: block;
@@ -105,6 +124,7 @@
              $("#positif").html(result[0].positif);
              $("#sembuh").html(result[0].sembuh);
              $("#meninggal").html(result[0].meninggal);
+            $("#dirawat").html(result[0].dirawat);
             }});
              $.ajax({
 	async: true,
@@ -156,8 +176,10 @@
         <div id="meninggal" class="angka"></div>
         <span class="detail">Meninggal</span>
         </div>
-		<br/>
-		<br/>
+        <div id="show4" class="dirawat">
+        <div id="dirawat" class="angka"></div>
+        <span class="detail">Dirawat</span>
+        </div>
 		<br/>
 		<br/>
 		<br/>
